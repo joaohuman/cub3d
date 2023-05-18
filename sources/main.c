@@ -1,7 +1,7 @@
-#include <stdio.h>
+#include "../includes/cub3d.h"
 
 int main(int argc, char *argv[])
 {
-    printf("Hello, World!\n");
+    check_errors(argc, argv);
     return (0);
 }
