@@ -11,6 +11,15 @@
 # include <unistd.h>
 # include <mlx.h>
 
+typedef struct s_texture {
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		floor;
+	int	 	ceil;
+} t_texture;
+
 typedef struct s_mlx {
 	void	*mlx;
 	void	*win;
@@ -21,6 +30,11 @@ typedef struct s_mlx {
 	int		endian;
 	int		set;
 }	t_mlx;
+
+typedef struct s_data {
+	t_mlx		*mlx;
+	t_texture	*text;
+} t_data;
 
 int		check_errors(int argc, char *argv[]);
 int		check_extension(char *arg, char *extension);
