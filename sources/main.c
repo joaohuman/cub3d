@@ -1,5 +1,12 @@
 #include "../includes/cub3d.h"
 
+int	key_hook(int keycode, t_mlx *vars)
+{
+	(void)vars;
+	printf("%d\n", keycode);
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_mlx	teste;
@@ -10,6 +17,7 @@ int	main(int argc, char *argv[])
 	(void)argv;
 	teste.mlx = mlx_init();
 	teste.win = mlx_new_window(teste.mlx, 600, 600, "Hello world!");
+	mlx_key_hook(teste.win, key_hook, &teste);
 	mlx_loop(teste.mlx);
 	return (0);
 }
