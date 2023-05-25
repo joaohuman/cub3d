@@ -10,6 +10,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <mlx.h>
+# include <libft.h>
 
 typedef struct s_texture {
 	char	*no;
@@ -31,15 +32,20 @@ typedef struct s_mlx {
 	int		set;
 }	t_mlx;
 
+typedef struct s_map {
+	char	**lines;
+	int		fd;
+} t_map;
+
 typedef struct s_data {
 	t_mlx		*mlx;
-	t_texture	*text;
+	t_texture	*tex;
+	t_map		*map;
 } t_data;
 
 int		check_errors(int argc, char *argv[]);
 int		check_extension(char *arg, char *extension);
 int		check_file(char *file_name);
-char	*get_next_line(int fd);
 void	init_window(t_mlx *f);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
 
