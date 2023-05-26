@@ -12,15 +12,6 @@
 # include <mlx.h>
 # include <libft.h>
 
-typedef struct s_texture {
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	int		floor;
-	int	 	ceil;
-} t_texture;
-
 typedef struct s_mlx {
 	void	*mlx;
 	void	*win;
@@ -35,11 +26,16 @@ typedef struct s_mlx {
 typedef struct s_map {
 	char	**lines;
 	int		fd;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		floor;
+	int	 	ceil;
 } t_map;
 
 typedef struct s_data {
 	t_mlx		*mlx;
-	t_texture	*tex;
 	t_map		*map;
 } t_data;
 
@@ -48,5 +44,10 @@ int		check_extension(char *arg, char *extension);
 int		check_file(char *file_name);
 void	init_window(t_mlx *f);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
+
+void	init_data(t_data *data);
+void	init_map(t_map *map);
+void	init_mlx(t_mlx *mlx);
+
 
 #endif

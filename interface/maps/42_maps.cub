@@ -1,7 +1,7 @@
-NO ./assets/Images/north.xpm
-SO ./assets/Images/north.xpm
-WE ./assets/Images/north.xpm
-EA ./assets/Images/north.xpm
+NO ./assets/Images/northNO.xpm
+SO ./assets/Images/northSO.xpm
+WE ./assets/Images/northWE.xpm
+EA ./assets/Images/nortHEA.xpm
 
 F 200,200,200
 C 2,100,67

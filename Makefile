@@ -10,7 +10,7 @@ SRCS				=	$(SOURCES)
 
 CC					=	cc
 
-SOURCES				=	main.c check_errors.c
+SOURCES				=	main.c check_errors.c init_data.c
 
 IFLAGS				=	-I $(HEADER_PATH)
 CFLAGS				=	-Wall -Wextra -Werror -g

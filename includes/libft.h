@@ -6,7 +6,7 @@
 /*   By: jvictor- <jvictor-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 19:32:15 by lsantana          #+#    #+#             */
-/*   Updated: 2023/05/25 02:27:03 by jvictor-         ###   ########.fr       */
+/*   Updated: 2023/05/26 03:08:07 by jvictor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 char	**ft_split(char const *s, char c);
 char	*get_next_line(int fd);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 
 typedef struct s_list
