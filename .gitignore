@@ -1,4 +1,3 @@
 ./obj
 *.o
 cub3d
-./libs/libft
