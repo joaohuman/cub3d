@@ -1,5 +1,13 @@
 #include "../includes/cub3d.h"
 
+static void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
 int		create_map(t_map *map)
 {
 	char *line;
@@ -39,10 +47,10 @@ int	validate_tex(t_map *map)
 			map->ea = map->lines[i] + 3;
 		i++;
 	}
-	printf("%s\n", map->no);
+	/*printf("%s\n", map->no);
 	printf("%s\n", map->so);
 	printf("%s\n", map->we);
-	printf("%s\n", map->ea);
+	printf("%s\n", map->ea);*/
 	return (0);
 }
 
@@ -80,7 +88,6 @@ void	free_matrix(char **matrix)
 void	free_all(t_data *data)
 {
 	free_matrix(data->map->lines);
-	free(data->mlx);
 	free(data->map);
 }
 
@@ -88,16 +95,39 @@ int	main(int argc, char *argv[])
 {
 	t_data	data;
 
+	(void)argc;
+	(void)argv;
 	if (check_errors(argc, argv))
 		return (-1);
 	init_data(&data);
 	data.map->fd = open(argv[1], O_RDWR);
 	if (check_map(data.map))
 		return (-1);
+	init_mlx(&data.mlx);
+	int y = 0;
+	int x = 0;
+	while (y < 600 / 2)
+	{
+		x= 0;
+		while (x < 600)
+		{
+			my_mlx_pixel_put(&data.mlx, x, y, 0x00008b);
+			x++;
+		}
+		y++;
+	}
+	while (y < 600)
+	{
+		x = 0;
+		while (x < 600)
+		{
+			my_mlx_pixel_put(&data.mlx, x, y, 0xC0C0C0);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
+	mlx_loop(data.mlx.mlx);
 	free_all(&data);
-	// teste.mlx = mlx_init();
-	// teste.win = mlx_new_window(teste.mlx, 600, 600, "Hello world!");
-	// mlx_key_hook(teste.win, key_hook, &teste);
-	// mlx_loop(teste.mlx);
 	return (0);
 }

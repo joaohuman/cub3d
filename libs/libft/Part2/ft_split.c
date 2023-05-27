@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:30:29 by lsantana          #+#    #+#             */
-/*   Updated: 2022/10/16 17:58:22 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/05/26 21:06:54 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,7 @@ static char	**ft_free_all(char **mat, int i)
 char	**ft_split(char const *s, char c)
 {
 	char	**mat;
-	int		i;
 
-	i = 0;
 	mat = (char **)ft_calloc(sizeof(char *), ft_check_size(s, c));
 	if (!mat)
 		return (NULL);

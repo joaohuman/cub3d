@@ -22,6 +22,8 @@ int	check_extension(char *arg, char *extension)
 	char	*aux;
 
 	aux = arg;
+	if (aux[0] == '.')
+		aux++;
 	while (*aux != '.')
 		aux++;
 	while (*aux || *extension)

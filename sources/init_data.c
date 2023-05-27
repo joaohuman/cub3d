@@ -2,14 +2,11 @@
 
 void	init_mlx(t_mlx *mlx)
 {
-	mlx->mlx = 0;
-	mlx->win = 0;
-	mlx->img = 0;
-	mlx->addr = 0;
-	mlx->bits_per_pixel = 0;
-	mlx->line_lenght = 0;
-	mlx->endian = 0;
-	mlx->set = 0;
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, 600, 600, "Cub3D");
+	mlx->img = mlx_new_image(mlx->mlx, 600, 600);
+	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bits_per_pixel, \
+	&mlx->line_lenght, &mlx->endian);
 }
 
 void	init_map(t_map *map)
@@ -26,9 +23,6 @@ void	init_map(t_map *map)
 
 void	init_data(t_data *data)
 {
-	data->mlx = malloc(sizeof(t_mlx));
 	data->map = malloc(sizeof(t_map));
-
-	init_mlx(data->mlx);
 	init_map(data->map);
 }
