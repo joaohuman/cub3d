@@ -1,7 +1,7 @@
-NO ./assets/Images/northNO.xpm
-SO ./assets/Images/northSO.xpm
-WE ./assets/Images/northWE.xpm
-EA ./assets/Images/nortHEA.xpm
+NO ./interface/textures/northNO.xpm
+SO ./interface/textures/northSO.xpm
+WE ./interface/textures/northWE.xpm
+EA ./interface/textures/northEA.xpm
 
 F 200,200,200
 C 2,100,67

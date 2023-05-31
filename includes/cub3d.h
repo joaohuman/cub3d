@@ -44,6 +44,8 @@ int		check_extension(char *arg, char *extension);
 int		check_file(char *file_name);
 void	init_window(t_mlx *f);
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color);
+int		error_msg(char *msg);
+
 
 void	init_data(t_data *data);
 void	init_map(t_map *map);
