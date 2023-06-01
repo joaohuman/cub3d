@@ -57,13 +57,13 @@ int	is_valid_path(t_map *map)
 	// 	i++;
 	// }
 
-	if (check_file(map->no))
+	if (map->no && check_file(map->no))
 		return (-1);
-	if (check_file(map->so))
+	if (map->so && check_file(map->so))
 		return (-1);
-	if (check_file(map->we))
+	if (map->we && check_file(map->we))
 		return (-1);
-	if (check_file(map->ea))
+	if (map->ea && check_file(map->ea))
 		return (-1);
 	return (0);
 }
@@ -94,11 +94,25 @@ int	validate_tex_path(t_map *map)
 	return (0);
 }
 
+int	all_tex_path_hav_been_set(t_map *map)
+{
+	if (map->no == NULL)
+		return (error_msg("the path of a texture is missing (no)"));
+	else if (map->so == NULL)
+		return (error_msg("the path of a texture is missing (so)"));
+	else if (map->we == NULL)
+		return (error_msg("the path of a texture is missing (we)"));
+	else if (map->ea == NULL)
+		return (error_msg("the path of a texture is missing (ea)"));
+	return (0);
+}
+
 int	validate_map(t_map *map)
 {
 	if (validate_tex_path(map))
 		return (-1);
-	//precisamos verificar se esta faltando alguma textura para alguma posicao
+	if (all_tex_path_hav_been_set(map))
+		return(-1);
 	//precisamos checar as cores
 	//precisamos verificar se esta faltando alguma cor ser definida
 	//precisamos checar os caracteres
