@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: jvictor- <jvictor-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:30:29 by lsantana          #+#    #+#             */
-/*   Updated: 2022/10/16 17:58:22 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/06/02 02:51:18 by jvictor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static char	**ft_free_all(char **mat, int i);
 
-static int	ft_check_size(char const *s, char c) ///oi meu nome é lucas // 'i' //
+static int	ft_check_size(char const *s, char c)
 {                                           
 	int	i;
-	int	count;		
+	int	count;
 
 	i = 0;
 	count = 0;
