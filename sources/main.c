@@ -1,6 +1,20 @@
 #include "../includes/cub3d.h"
 
-static void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
+const char map[11][11] = {
+	"1111111111",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1000000001",
+	"1111111111"
+};
+
+void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 {
 	char	*dst;
 
@@ -91,41 +105,51 @@ void	free_all(t_data *data)
 	free(data->map);
 }
 
+double discover_multiplier(int pixel)
+{
+	double multiplier;
+
+	multiplier = 2 * (pixel / WIDTH) - 1;
+	return (multiplier);
+}
+
+void get_delta_dist(t_data *data)
+{
+	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
+	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
+}
+
+void draw(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < WIDTH)
+	{
+		data->ray.multiplier = discover_multiplier(i);
+		data->ray.cam_pix.x = data->player.plane.x * data->ray.multiplier;
+		data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
+	    data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
+		data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
+		get_delta_dist(data);
+		i++;
+	}
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data	data;
-
 	(void)argc;
 	(void)argv;
-	if (check_errors(argc, argv))
-		return (-1);
-	init_data(&data);
-	data.map->fd = open(argv[1], O_RDWR);
-	if (check_map(data.map))
-		return (-1);
+//	if (check_errors(argc, argv))
+//		return (-1);
+//	init_data(&data);
+	ft_bzero(&data, sizeof(t_data));
+//	data.map->fd = open(argv[1], O_RDWR);
+//	if (check_map(data.map))
+//		return (-1);
 	init_mlx(&data.mlx);
-	int y = 0;
-	int x = 0;
-	while (y < 600 / 2)
-	{
-		x= 0;
-		while (x < 600)
-		{
-			my_mlx_pixel_put(&data.mlx, x, y, 0x00008b);
-			x++;
-		}
-		y++;
-	}
-	while (y < 600)
-	{
-		x = 0;
-		while (x < 600)
-		{
-			my_mlx_pixel_put(&data.mlx, x, y, 0xC0C0C0);
-			x++;
-		}
-		y++;
-	}
+	draw(&data);
 	mlx_put_image_to_window(data.mlx.mlx, data.mlx.win, data.mlx.img, 0, 0);
 	mlx_loop(data.mlx.mlx);
 	free_all(&data);
