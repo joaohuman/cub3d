@@ -120,38 +120,100 @@ int	define_color(char c, t_map *map, int *rgb)
 	{
 		if (map->floor)
 			return (error_msg("There are duplicate colors to floor"));
-		map->floor = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+		map->floor = rgb[0] << 16 | rgb[1] << 8 | rgb[2];
 	}
 	else
 	{
 		if (map->ceil)
 			return (error_msg("There are duplicate colors to ceil"));
-		map->ceil = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+		map->ceil = rgb[0] << 16 | rgb[1] << 8 | rgb[2];
 	}
 	return (0);
+}
+
+int	ft_strlen_matrix(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int num_between_commas(char *line)
+{
+	int		len;
+	int		i;
+	char	**split_test;
+
+	i = 0;
+	len = 0;
+	split_test = ft_split(line, ',');
+	if (ft_strlen_matrix(split_test) != 3)
+	{
+		free_matrix(split_test);
+		return (-1);
+	}
+	while (split_test[i])
+	{
+		len = ft_strlen(split_test[i]);
+		if (len < 1 || len > 3)
+		{
+			free_matrix(split_test);
+			return (-1);
+		}
+		i++;
+	}
+	free_matrix(split_test);
+	return (0);
+}
+
+int how_many_commas(char *line)
+{
+	int i;
+	int comma;
+
+	i = 0;
+	comma = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			comma++;
+		i++;
+	}
+	if (i == comma)
+		return (-1);
+	return(comma);
 }
 
 int	assign_color(char c, char *line, t_map *map)
 {
 	char **rgb_split;
+	char *trim_line;
 	int rgb[3];
 	int i;
 
+	if (how_many_commas(line) != 2 || num_between_commas(line))
+		return(error_msg("Error in rgb colors, inform as follows: 255,255,255"));
 	rgb_split = ft_split(line, ',');
 	i = 0;
 	while (i < 3)
 	{
 		if (!ft_str_is_digit(rgb_split[i]))
+		{
+			free_matrix(rgb_split);
 			return (error_msg("Invalid RGB color"));
-
-		//////////////////////////////////////////
-
-		rgb[i] = ft_atoi(rgb_split[i]);
-		
-		//EXISTE UM ERRO AQUI NA CONVERSAO DA ATOI, RESOLVIDO ISSO, AS CORES ESTARAO OK
-		
+		}
+		trim_line = ft_strtrim(rgb_split[i], " \n\t\r");
+		rgb[i] = ft_atoi(trim_line);
 		if (rgb[i] < 0 || rgb[i] > 255)
+		{
+			free_matrix(rgb_split);
+			free(trim_line);
 			return (error_msg("Invalid RGB color"));
+		}
+		free(trim_line);
 		i++;
 	}
 	free_matrix(rgb_split);
@@ -177,6 +239,10 @@ int	validate_floor_ceil_colors(t_map *map)
 	}
 	if (status)
 		return (-1);
+	if (!map->floor || !map->ceil)
+		return (error_msg("One of the colors was missing"));
+	if (map->floor == map->ceil)
+		return (error_msg("Ceiling and floor colors cannot be the same"));
 	return (0);
 }
 
@@ -189,9 +255,7 @@ int	validate_map(t_map *map)
 	if (validate_floor_ceil_colors(map))
 		return (-1);
 	
-	//precisamos checar se as cores sao repetidas
-	//precisamos verificar se esta faltando alguma cor ser definida
-	//precisamos checar os caracteres
+	//precisamos checar os caracteres permitidos
 	//precisamos checar se o mapa esta fechado
 	return (0);
 }
