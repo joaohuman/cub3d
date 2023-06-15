@@ -28,7 +28,6 @@ void	init_data(t_data *data)
 {
 	data->mlx = malloc(sizeof(t_mlx));
 	data->map = malloc(sizeof(t_map));
-
 	init_mlx(data->mlx);
 	init_map(data->map);
 }

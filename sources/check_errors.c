@@ -19,7 +19,7 @@ int	check_errors(int argc, char *argv[])
 
 int	check_extension(char *arg, char *extension)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arg[i])
