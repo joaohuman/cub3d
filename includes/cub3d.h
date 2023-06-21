@@ -57,7 +57,13 @@ void	init_mlx(t_mlx *mlx);
 
 int		check_map(t_map *map);
 int		create_map(t_map *map);
+int		validate_chars(t_map *map);
 int		validate_map(t_map *map);
+
+int		just_one_player(char *players_allowed, char c, int flag);
+int		validate_single_player(t_map *map);
+int		check_around_char(int i, int j, t_map *map);
+int		validate_map_borders(t_map *map);
 
 int		validate_tex_path(t_map *map);
 int		assign_tex_path(char **tex, char *path);
@@ -69,7 +75,6 @@ int		assign_color(char c, char *line, t_map *map);
 int		validate_and_assign(char **rgb_split, int *rgb, int i);
 int		define_color(char c, t_map *map, int *rgb);
 
-
 void	free_all(t_data *data);
 void	free_matrix(char **matrix);
 
@@ -77,6 +82,5 @@ int		ft_str_is_digit(char *str);
 int		ft_strlen_matrix(char **str);
 int 	how_many_commas(char *line);
 int 	num_between_commas(char *line);
-
 
 #endif
