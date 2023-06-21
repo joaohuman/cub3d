@@ -12,6 +12,10 @@
 # include <mlx.h>
 # include <libft.h>
 
+# define START_OF_MAP 6
+# define SUCCESS 0
+# define ERROR -1
+
 typedef struct s_mlx {
 	void	*mlx;
 	void	*win;
