@@ -11,6 +11,7 @@
 # include <unistd.h>
 # include <mlx.h>
 # include <libft.h>
+# include <stdbool.h>
 
 # define WIDTH 640
 # define HEIGHT 480
@@ -34,6 +35,8 @@ typedef struct s_vector{
 typedef struct s_map {
 	char	**lines;
 	int		fd;
+	int		x;
+	int		y;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -54,6 +57,9 @@ typedef struct s_ray {
 	t_vector dir;
 	t_vector cam_pix;
 	t_vector delta_dist;
+	bool hit_side;
+	t_vector dist_to_side;
+	t_vector step;
 } t_ray;
 
 
@@ -74,6 +80,9 @@ void	init_map(t_map *map);
 void	init_mlx(t_mlx *mlx);
 double 	discover_multiplier(int pixel);
 void 	draw(t_data *data);
+void 	dist_to_side(t_data *data);
+void	perform_dda(t_data *data, t_ray *ray);
+
 
 
 #endif

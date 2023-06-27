@@ -1,19 +1,5 @@
 #include "../includes/cub3d.h"
 
-const char map[11][11] = {
-	"1111111111",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1000000001",
-	"1111111111"
-};
-
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 {
 	char	*dst;
@@ -103,37 +89,6 @@ void	free_all(t_data *data)
 {
 	free_matrix(data->map->lines);
 	free(data->map);
-}
-
-double discover_multiplier(int pixel)
-{
-	double multiplier;
-
-	multiplier = 2 * (pixel / WIDTH) - 1;
-	return (multiplier);
-}
-
-void get_delta_dist(t_data *data)
-{
-	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
-	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
-}
-
-void draw(t_data *data)
-{
-	int i;
-
-	i = 0;
-	while (i < WIDTH)
-	{
-		data->ray.multiplier = discover_multiplier(i);
-		data->ray.cam_pix.x = data->player.plane.x * data->ray.multiplier;
-		data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
-	    data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
-		data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
-		get_delta_dist(data);
-		i++;
-	}
 }
 
 int	main(int argc, char *argv[])
