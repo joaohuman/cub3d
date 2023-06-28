@@ -96,7 +96,7 @@ int	main(int argc, char *argv[])
 	t_data	data;
 	(void)argc;
 	(void)argv;
-//	if (check_errors(argc, argv))
+//	if (check_errors(argc, argv));
 //		return (-1);
 //	init_data(&data);
 	ft_bzero(&data, sizeof(t_data));
