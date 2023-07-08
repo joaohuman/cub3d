@@ -32,13 +32,13 @@ void	perform_dda(t_data *data, t_ray *ray)
 		{
 			ray->dist_to_side.x += ray->delta_dist.x;
 			data->map->x += ray->step.x;
-			ray->hit_side = false;
+			ray->hit_side = 0;
 		}
 		else
 		{
 			ray->dist_to_side.y += ray->delta_dist.y;
 			data->map->y += ray->step.y;
-			ray->hit_side = true;
+			ray->hit_side = 1;
 		}
 		if (data->map->y < 0 || data->map->x < 0 || !data->map->lines[data->map->y] \
 			|| !data->map->lines[data->map->y][data->map->x])
@@ -48,6 +48,23 @@ void	perform_dda(t_data *data, t_ray *ray)
 	}
 }
 
+void calc_line_heigh(t_ray *ray)
+{
+	if (ray->hit_side == 0)
+		ray->perp_dist = (ray->dist_to_side.x - ray->delta_dist.x);
+	else
+		ray->perp_dist = (ray->dist_to_side.y - ray->delta_dist.y);
+	ray->line_height = (int)(HEIGHT / ray->perp_dist);
+	ray->start_line = -(ray->line_height) / 2 + HEIGHT / 2;
+	if (ray->start_line < 0)
+		ray->start_line = 0;
+	ray->end_line = ray->line_height / 2 + HEIGHT / 2;
+	if (ray->end_line >= HEIGHT)
+		ray->end_line = HEIGHT - 1;
+	
+}
+
+
 double discover_multiplier(int pixel)
 {
 	double multiplier;
@@ -56,7 +73,7 @@ double discover_multiplier(int pixel)
 	return (multiplier);
 }
 
-void draw(t_data *data)
+int draw(t_data *data)
 {
 	int i;
 
@@ -73,6 +90,9 @@ void draw(t_data *data)
 		data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
 		data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
 		dist_to_side(data);
+		perform_dda(data, &data->ray);
+		calc_line_heigh(&data->ray);
 		i++;
 	}
+	return (0);
 }

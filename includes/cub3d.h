@@ -57,9 +57,13 @@ typedef struct s_ray {
 	t_vector dir;
 	t_vector cam_pix;
 	t_vector delta_dist;
-	bool hit_side;
+	int hit_side;
 	t_vector dist_to_side;
 	t_vector step;
+	double perp_dist;
+	double line_height;
+	int start_line;
+	int end_line;
 } t_ray;
 
 
@@ -79,7 +83,7 @@ void	init_data(t_data *data);
 void	init_map(t_map *map);
 void	init_mlx(t_mlx *mlx);
 double 	discover_multiplier(int pixel);
-void 	draw(t_data *data);
+int		draw(t_data *data);
 void 	dist_to_side(t_data *data);
 void	perform_dda(t_data *data, t_ray *ray);
 

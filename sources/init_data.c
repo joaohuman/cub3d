@@ -16,8 +16,8 @@ void	init_map(t_map *map)
 
 void init_player(t_player *player)
 {
-	player->pos.x = 5;
-	player->pos.y = 5;
+	player->pos.x = 1;
+	player->pos.y = 1;
 	player->dir.x = 0;
 	player->dir.y = -1;
 	player->plane.x = 0.66;
