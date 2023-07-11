@@ -37,6 +37,6 @@ void	init_data(t_data *data)
 {
 	ft_bzero(data, sizeof(t_data));
 	data->map = malloc(sizeof(t_map));
-	init_mlx(data->mlx);
+	init_mlx(&data->mlx);
 	init_map(data->map);
 }

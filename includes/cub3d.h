@@ -19,6 +19,8 @@
 # define START_OF_MAP 6
 # define SUCCESS 0
 # define ERROR -1
+# define ESC 65307
+
 
 typedef struct s_mlx {
 	void	*mlx;
@@ -92,6 +94,8 @@ double 	discover_multiplier(int pixel);
 int		draw(t_data *data);
 void 	dist_to_side(t_data *data);
 void	perform_dda(t_data *data, t_ray *ray);
+int	desenhar(t_data *d);
+void calc_line_heigh(t_ray *ray);
 
 
 int		check_map(t_map *map);

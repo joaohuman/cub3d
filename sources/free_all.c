@@ -3,7 +3,7 @@
 void	free_all(t_data *data)
 {
 	free_matrix(data->map->lines);
-	free(data->mlx);
+	free(&data->mlx);
 	free(data->map);
 }
 
