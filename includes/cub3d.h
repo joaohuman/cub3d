@@ -70,6 +70,7 @@ typedef struct s_ray {
 	double line_height;
 	int start_line;
 	int end_line;
+	double wall_x;
 } t_ray;
 
 
@@ -95,7 +96,7 @@ int		draw(t_data *data);
 void 	dist_to_side(t_data *data);
 void	perform_dda(t_data *data, t_ray *ray);
 int	desenhar(t_data *d);
-void calc_line_heigh(t_ray *ray);
+void calc_line_heigh(t_ray *ray, t_player *player);
 
 
 int		check_map(t_map *map);

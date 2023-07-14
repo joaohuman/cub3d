@@ -16,8 +16,6 @@ void	init_map(t_map *map)
 
 void init_player(t_player *player)
 {
-	player->pos.x = 1;
-	player->pos.y = 1;
 	player->dir.x = 0;
 	player->dir.y = -1;
 	player->plane.x = 0.66;
@@ -38,5 +36,8 @@ void	init_data(t_data *data)
 	ft_bzero(data, sizeof(t_data));
 	data->map = malloc(sizeof(t_map));
 	init_mlx(&data->mlx);
+	init_player(&data->player);
+	init_ray(&data->ray);
+
 	init_map(data->map);
 }
