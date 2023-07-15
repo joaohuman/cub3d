@@ -12,6 +12,8 @@
 # include <mlx.h>
 # include <libft.h>
 # include <stdbool.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 # define WIDTH 640
 # define HEIGHT 480
@@ -20,6 +22,14 @@
 # define SUCCESS 0
 # define ERROR -1
 # define ESC 65307
+# define MOVE_SPEED 0.01
+# define ROT_SPEED 0.01
+# define A_KEY 'a'
+# define S_KEY 's'
+# define D_KEY 'd'
+# define W_KEY 'w'
+# define RIGHT_KEY 65361
+# define LEFT_KEY 65363
 
 
 typedef struct s_mlx {
@@ -56,6 +66,8 @@ typedef struct s_player {
 	t_vector	pos;
 	t_vector	dir;
 	t_vector	plane;
+	t_vector	move;
+	t_vector	rotate;
 } t_player;
 
 typedef struct s_ray {
@@ -97,6 +109,10 @@ void 	dist_to_side(t_data *data);
 void	perform_dda(t_data *data, t_ray *ray);
 int	desenhar(t_data *d);
 void calc_line_heigh(t_ray *ray, t_player *player);
+int ft_line_len(char **map);
+int	rotate(double *x, double *y, double angle);
+int key_no_pressed(int key, t_data *d);
+int key_pressed_down(int key, t_data *d);
 
 
 int		check_map(t_map *map);

@@ -103,17 +103,15 @@ void draw_minimapa(t_data *data)
 	int y;
 
 	i = START_OF_MAP;
-	while (i < 20)
+	while (i < ft_strlen_matrix(data->map->lines + 6) + 6)
 	{
 		j = 0;
-		while (j < 38)
+		while (j < ft_line_len(data->map->lines + 6))
 		{
 			x = j * 4;
 			y = i * 4;
 			if (data->map->lines[i][j] == '1')
 				draw_square(&data->mlx, x, y, 4, 0x00FF00);
-			else if (data->map->lines[i][j] == '2')
-				draw_square(&data->mlx, x, y, 4, 0x0000FF);
 			else if (data->map->lines[i][j] == '0')
 				draw_square(&data->mlx, x, y, 4, 0x000000);
 			j++;
@@ -123,42 +121,76 @@ void draw_minimapa(t_data *data)
 	draw_square(&data->mlx, data->player.pos.x * 4, data->player.pos.y * 4, 4, 0xFF0000);
 }
 
+void draw_image(t_data *data, int i)
+{
+	int y;
+
+	y = 0;
+	while(y < data->ray.start_line)
+	{
+		my_mlx_pixel_put(&data->mlx, i, y, data->map->ceil);
+		y++;
+	}
+	while (y < data->ray.end_line)
+	{
+		if (data->ray.hit_side == 0)
+			my_mlx_pixel_put(&data->mlx, i, y, 8388608);
+		else
+			my_mlx_pixel_put(&data->mlx, i, y, 16711680);
+		y++;
+	}
+	while (y < HEIGHT)
+	{
+		my_mlx_pixel_put(&data->mlx, i, y, data->map->floor);
+		y++;
+	}
+}
+
+void create_dda(t_data *data)
+{
+	data->ray.cam_pix.x = data->player.plane.x * data->ray.multiplier;
+	data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
+    data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
+	data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
+	data->map->x = (int)data->player.pos.x;
+	data->map->y = (int)data->player.pos.y;
+	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
+	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
+}
+
 int draw(t_data *data)
 {
 	int i;
-	int y;
 
 	i = 0;
 	while (i < WIDTH)
 	{
+		if (data->player.move.x == 1)
+		{
+			data->player.pos.x += data->player.dir.x * 0.1;
+			data->player.pos.y += data->player.dir.y * 0.1;
+		}
+		if (data->player.move.x == -1)
+		{
+			data->player.pos.x -= data->player.dir.x * 0.1;
+			data->player.pos.y -= data->player.dir.y * 0.1;
+		}
+		if (data->player.move.y == 1)
+		{
+			data->player.pos.x += data->player.dir.y * 0.1;
+			data->player.pos.y -= data->player.dir.x * 0.1;
+		}
+		if (data->player.move.y == -1)
+		{
+			data->player.pos.x -= data->player.dir.y * 0.1;
+			data->player.pos.y += data->player.dir.x * 0.1;
+		}
 		data->ray.multiplier = discover_multiplier(i);
-		data->ray.cam_pix.x = data->player.plane.x * data->ray.multiplier;
-		data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
-	    data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
-		data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
-		data->map->x = (int)data->player.pos.x;
-		data->map->y = (int)data->player.pos.y;
-		data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
-		data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
+		create_dda(data);
 		dist_to_side(data);
 		perform_dda(data, &data->ray);
 		calc_line_heigh(&data->ray, &data->player);
-		y = 0;
-		while(y < data->ray.start_line)
-		{
-			my_mlx_pixel_put(&data->mlx, i, y, data->map->ceil);
-			y++;
-		}
-		while (y < data->ray.end_line)
-		{
-			my_mlx_pixel_put(&data->mlx, i, y, 4522552);
-			y++;
-		}
-		while (y < HEIGHT)
-		{
-			my_mlx_pixel_put(&data->mlx, i, y, data->map->floor);
-			y++;
-		}
+		draw_image(data, i);
 		i++;
 	}
 	draw_minimapa(data);

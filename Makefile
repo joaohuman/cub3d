@@ -10,7 +10,7 @@ SRCS				=	$(SOURCES)
 
 CC					=	cc
 
-SOURCES				=	main.c check_errors.c init_data.c calc_dda.c check_map.c check_map_support.c validate_tex_path.c validate_f_c_colors.c validate_f_c_colors_support.c free_all.c
+SOURCES				=	main.c check_errors.c init_data.c calc_dda.c check_map.c check_map_support.c validate_tex_path.c validate_f_c_colors.c validate_f_c_colors_support.c free_all.c moves.c
 
 IFLAGS				=	-I $(HEADER_PATH)
 CFLAGS				=	-Wall -Wextra -Werror -g
