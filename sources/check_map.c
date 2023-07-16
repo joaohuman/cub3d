@@ -9,25 +9,40 @@ int	check_map(t_map *map)
 	return (SUCCESS);
 }
 
-int	create_map(t_map *map)
+int variable_map(t_map *m, char **lines)
+{
+	int i;
+
+	i = 0;
+	m->map = malloc(sizeof(char *) * ft_strlen_matrix(lines + 6) + 1);
+	while (i < ft_strlen_matrix(lines + 6))
+	{
+		m->map[i] = ft_strdup(lines[i + 6]);
+		i++;
+	}
+	return (0);
+}
+
+int	create_map(t_map *m)
 {
 	char	*line;
 	char	*aux;
 
-	line = get_next_line(map->fd);
+	line = get_next_line(m->fd);
 	if (line == NULL)
 		return (error_msg("(Malloc) Error to allocate memory"));
 	while (1)
 	{
-		aux = get_next_line(map->fd);
+		aux = get_next_line(m->fd);
 		if (aux == NULL)
 			break ;
 		line = ft_strjoin_free(line, aux);
 		free(aux);
 	}
-	map->lines = ft_split(line, '\n');
+	m->lines = ft_split(line, '\n');
+	variable_map(m, m->lines);
 	free(line);
-	close(map->fd);
+	close(m->fd);
 	return (SUCCESS);
 }
 

@@ -34,6 +34,16 @@ int key_pressed_down(int key, t_data *d)
         if (d->map->lines[(int)d->player.pos.y][(int)d->player.pos.x + 1] != '1')
             d->player.move.x = 1;
     }
+    else if (key == XK_Right)
+    {
+        rotate(&d->player.dir.x, &d->player.dir.y, ROT_SPEED);
+        rotate(&d->player.plane.x, &d->player.plane.y, ROT_SPEED);
+    }
+    else if (key == XK_Left)
+    {
+        rotate(&d->player.dir.x, &d->player.dir.y, -ROT_SPEED);
+        rotate(&d->player.plane.x, &d->player.plane.y, -ROT_SPEED);
+    }
     else if (key == XK_Escape)
 		ft_close(d);
     return (0);
