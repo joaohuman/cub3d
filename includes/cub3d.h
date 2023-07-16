@@ -50,6 +50,7 @@ typedef struct s_vector{
 
 typedef struct s_map {
 	char	**lines;
+	char	**map;
 	int		fd;
 	int		x;
 	int		y;
@@ -113,6 +114,7 @@ int ft_line_len(char **map);
 int	rotate(double *x, double *y, double angle);
 int key_no_pressed(int key, t_data *d);
 int key_pressed_down(int key, t_data *d);
+int	ft_close(t_data *s);
 
 
 int		check_map(t_map *map);

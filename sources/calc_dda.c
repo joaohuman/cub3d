@@ -40,9 +40,9 @@ void	perform_dda(t_data *data, t_ray *ray)
 			data->map->y += ray->step.y;
 			ray->hit_side = 1;
 		}
-		if (data->map->y < 0 || data->map->x < 0 || !data->map->lines[data->map->y] \
-			|| !data->map->lines[data->map->y][data->map->x])
-			break ;
+		// if (data->map->y < 0 || data->map->x < 0 || !data->map->lines[data->map->y] 
+			// || !data->map->lines[data->map->y][data->map->x])
+		// 	break ;
 		if(data->map->lines[data->map->y][data->map->x] == '1')
 			break ;
 	}
@@ -112,7 +112,7 @@ void draw_minimapa(t_data *data)
 			y = i * 4;
 			if (data->map->lines[i][j] == '1')
 				draw_square(&data->mlx, x, y, 4, 0x00FF00);
-			else if (data->map->lines[i][j] == '0')
+			else if (data->map->lines[i][j] != '\0')
 				draw_square(&data->mlx, x, y, 4, 0x000000);
 			j++;
 		}
@@ -161,30 +161,13 @@ void create_dda(t_data *data)
 int draw(t_data *data)
 {
 	int i;
+	double factor = 0.00003;
 
 	i = 0;
 	while (i < WIDTH)
 	{
-		if (data->player.move.x == 1)
-		{
-			data->player.pos.x += data->player.dir.x * 0.1;
-			data->player.pos.y += data->player.dir.y * 0.1;
-		}
-		if (data->player.move.x == -1)
-		{
-			data->player.pos.x -= data->player.dir.x * 0.1;
-			data->player.pos.y -= data->player.dir.y * 0.1;
-		}
-		if (data->player.move.y == 1)
-		{
-			data->player.pos.x += data->player.dir.y * 0.1;
-			data->player.pos.y -= data->player.dir.x * 0.1;
-		}
-		if (data->player.move.y == -1)
-		{
-			data->player.pos.x -= data->player.dir.y * 0.1;
-			data->player.pos.y += data->player.dir.x * 0.1;
-		}
+		data->player.pos.x += factor * (data->player.move.x * data->player.dir.y - data->player.move.y * data->player.dir.x);
+		data->player.pos.y += factor * (data->player.move.y * data->player.dir.y + data->player.move.x * data->player.dir.x);
 		data->ray.multiplier = discover_multiplier(i);
 		create_dda(data);
 		dist_to_side(data);
@@ -194,6 +177,55 @@ int draw(t_data *data)
 		i++;
 	}
 	draw_minimapa(data);
+	printf("pos x: %f\n", data->player.pos.x);
+	printf("pos y: %f\n", data->player.pos.y);
+	printf("data->map.x: %d\n", data->map->x);
+	printf("data->map.y: %d\n", data->map->y);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);
 }
+
+
+			//data->player.pos.x = data->player.pos.x + data->player.dir.y * 0.0001;
+            //data->player.pos.y = data->player.pos.y - data->player.dir.x * 0.0001;
+
+/*int draw(t_data *data)
+{
+    int i;
+
+    i = 0;
+    while (i < WIDTH)
+    {
+        if (data->player.move.x == 1)
+        {
+            data->player.pos.x = data->player.pos.x - data->player.dir.y * 0.0001;
+            data->player.pos.y = data->player.pos.y + data->player.dir.x * 0.0001;
+        }
+        if (data->player.move.x == -1)
+        {
+            data->player.pos.x = data->player.pos.x + data->player.dir.y * 0.0001;
+            data->player.pos.y = data->player.pos.y - data->player.dir.x * 0.0001;
+        }
+        if (data->player.move.y == 1)
+        {
+            data->player.pos.x = data->player.pos.x + data->player.dir.x * 0.0001;
+            data->player.pos.y = data->player.pos.y + data->player.dir.y * 0.0001;
+        }
+        if (data->player.move.y == -1)
+        {
+            data->player.pos.x = data->player.pos.x - data->player.dir.x * 0.0001;
+            data->player.pos.y = data->player.pos.y - data->player.dir.y * 0.0001;
+        }
+		printf("x = %f, y = %f\n", data->player.pos.x, data->player.pos.y);
+        data->ray.multiplier = discover_multiplier(i);
+        create_dda(data);
+        dist_to_side(data);
+        perform_dda(data, &data->ray);
+        calc_line_heigh(&data->ray, &data->player);
+        draw_image(data, i);
+        i++;
+    }
+    draw_minimapa(data);
+    mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
+    return (0);
+}*/
