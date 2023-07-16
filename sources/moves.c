@@ -16,7 +16,7 @@ int key_pressed_down(int key, t_data *d)
 {
     if (key == XK_w)
     {
-        if (d->map->lines[(int)d->player.pos.y + 10][(int)d->player.pos.x] != '1')
+        if (d->map->lines[(int)d->player.pos.y + 1][(int)d->player.pos.x] != '1')
             d->player.move.y = 1;
     }
     else if (key == XK_s)

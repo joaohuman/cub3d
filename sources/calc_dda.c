@@ -1,5 +1,17 @@
 #include "../includes/cub3d.h"
 
+void create_dda(t_data *data)
+{
+	data->ray.cam_pix.x = data->player.plane.x * data->ray.multiplier;
+	data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
+    data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
+	data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
+	data->map->x = (int)data->player.pos.x;
+	data->map->y = (int)data->player.pos.y;
+	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
+	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
+}
+
 void dist_to_side(t_data *data)
 {
 	if (data->ray.dir.x < 0)
@@ -40,9 +52,9 @@ void	perform_dda(t_data *data, t_ray *ray)
 			data->map->y += ray->step.y;
 			ray->hit_side = 1;
 		}
-		// if (data->map->y < 0 || data->map->x < 0 || !data->map->lines[data->map->y] 
-			// || !data->map->lines[data->map->y][data->map->x])
-		// 	break ;
+		if (data->map->y < 0 || data->map->x < 0 || !data->map->lines[data->map->y] \
+			|| !data->map->lines[data->map->y][data->map->x])
+			break ;
 		if(data->map->lines[data->map->y][data->map->x] == '1')
 			break ;
 	}
@@ -68,100 +80,10 @@ void calc_line_heigh(t_ray *ray, t_player *player)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-
-double discover_multiplier(int pixel)
-{
-	double multiplier;
-
-	multiplier = 2 * pixel / (double)WIDTH - 1;
-	return (multiplier);
-}
-
-void draw_square(t_mlx *mlx, int x, int y, int size, int color)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (j < size)
-		{
-			my_mlx_pixel_put(mlx, x + i, y + j, color);
-			j++;
-		}
-		i++;
-	}
-}
-
-void draw_minimapa(t_data *data)
-{
-	int i;
-	int j;
-	int x;
-	int y;
-
-	i = START_OF_MAP;
-	while (i < ft_strlen_matrix(data->map->lines + 6) + 6)
-	{
-		j = 0;
-		while (j < ft_line_len(data->map->lines + 6))
-		{
-			x = j * 4;
-			y = i * 4;
-			if (data->map->lines[i][j] == '1')
-				draw_square(&data->mlx, x, y, 4, 0x00FF00);
-			else if (data->map->lines[i][j] != '\0')
-				draw_square(&data->mlx, x, y, 4, 0x000000);
-			j++;
-		}
-		i++;
-	}
-	draw_square(&data->mlx, data->player.pos.x * 4, data->player.pos.y * 4, 4, 0xFF0000);
-}
-
-void draw_image(t_data *data, int i)
-{
-	int y;
-
-	y = 0;
-	while(y < data->ray.start_line)
-	{
-		my_mlx_pixel_put(&data->mlx, i, y, data->map->ceil);
-		y++;
-	}
-	while (y < data->ray.end_line)
-	{
-		if (data->ray.hit_side == 0)
-			my_mlx_pixel_put(&data->mlx, i, y, 8388608);
-		else
-			my_mlx_pixel_put(&data->mlx, i, y, 16711680);
-		y++;
-	}
-	while (y < HEIGHT)
-	{
-		my_mlx_pixel_put(&data->mlx, i, y, data->map->floor);
-		y++;
-	}
-}
-
-void create_dda(t_data *data)
-{
-	data->ray.cam_pix.x = data->player.plane.x * data->ray.multiplier;
-	data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
-    data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
-	data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
-	data->map->x = (int)data->player.pos.x;
-	data->map->y = (int)data->player.pos.y;
-	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
-	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
-}
-
 int draw(t_data *data)
 {
 	int i;
-	double factor = 0.00003;
+	double factor = 0.00002;
 
 	i = 0;
 	while (i < WIDTH)
@@ -177,55 +99,6 @@ int draw(t_data *data)
 		i++;
 	}
 	draw_minimapa(data);
-	printf("pos x: %f\n", data->player.pos.x);
-	printf("pos y: %f\n", data->player.pos.y);
-	printf("data->map.x: %d\n", data->map->x);
-	printf("data->map.y: %d\n", data->map->y);
 	mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
 	return (0);
 }
-
-
-			//data->player.pos.x = data->player.pos.x + data->player.dir.y * 0.0001;
-            //data->player.pos.y = data->player.pos.y - data->player.dir.x * 0.0001;
-
-/*int draw(t_data *data)
-{
-    int i;
-
-    i = 0;
-    while (i < WIDTH)
-    {
-        if (data->player.move.x == 1)
-        {
-            data->player.pos.x = data->player.pos.x - data->player.dir.y * 0.0001;
-            data->player.pos.y = data->player.pos.y + data->player.dir.x * 0.0001;
-        }
-        if (data->player.move.x == -1)
-        {
-            data->player.pos.x = data->player.pos.x + data->player.dir.y * 0.0001;
-            data->player.pos.y = data->player.pos.y - data->player.dir.x * 0.0001;
-        }
-        if (data->player.move.y == 1)
-        {
-            data->player.pos.x = data->player.pos.x + data->player.dir.x * 0.0001;
-            data->player.pos.y = data->player.pos.y + data->player.dir.y * 0.0001;
-        }
-        if (data->player.move.y == -1)
-        {
-            data->player.pos.x = data->player.pos.x - data->player.dir.x * 0.0001;
-            data->player.pos.y = data->player.pos.y - data->player.dir.y * 0.0001;
-        }
-		printf("x = %f, y = %f\n", data->player.pos.x, data->player.pos.y);
-        data->ray.multiplier = discover_multiplier(i);
-        create_dda(data);
-        dist_to_side(data);
-        perform_dda(data, &data->ray);
-        calc_line_heigh(&data->ray, &data->player);
-        draw_image(data, i);
-        i++;
-    }
-    draw_minimapa(data);
-    mlx_put_image_to_window(data->mlx.mlx, data->mlx.win, data->mlx.img, 0, 0);
-    return (0);
-}*/

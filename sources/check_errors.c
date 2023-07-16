@@ -46,3 +46,12 @@ int	check_file(char *file_name)
 		return (-1);
 	return (0);
 }
+
+int	ft_close(t_data *s)
+{
+	mlx_destroy_image(s->mlx.mlx, s->mlx.img);
+	mlx_destroy_window(s->mlx.mlx, s->mlx.win);
+	mlx_destroy_display(s->mlx.mlx);
+	free(s->mlx.mlx);
+	exit (0);
+}
