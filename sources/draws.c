@@ -36,7 +36,7 @@ void draw_minimapa(t_data *data)
 	while (i < ft_strlen_matrix(data->map->map))
 	{
 		j = 0;
-		while (j < ft_line_len(data->map->map))
+		while (j < (int)ft_strlen(data->map->map[i]))
 		{
 			x = j * 4;
 			y = i * 4;

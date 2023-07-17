@@ -86,8 +86,8 @@ int	check_collision(t_map *m, double p_x, double p_y, double d_x, double d_y)
 	double check_px;
 	double check_py;
 
-	check_px = p_x + (d_x * 0.005);
-	check_py = p_y + (d_y * 0.005);
+	check_px = p_x + (d_x * 0.059);
+	check_py = p_y + (d_y * 0.059);
 	control = 0;
 	if (check_px < 0 || check_px > WIDTH || check_py < 0 || \
 	check_py > HEIGHT || m->map[(int)check_py][(int)check_px] == '1')
@@ -144,10 +144,6 @@ int draw(t_data *data)
 	while (i < WIDTH)
 	{
 		move_player(&data->player, data->map);
-		// printf("p->pos.x = %f\n", data->player.pos.x);
-		// printf("p->pos.y = %f\n", data->player.pos.y);
-		// printf("map.x = %d\n", data->map->x);
-		// printf("map.y = %d\n", data->map->y);
 		rotate_player(data);
 		data->ray.multiplier = discover_multiplier(i);
 		create_dda(data);

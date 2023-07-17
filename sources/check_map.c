@@ -1,8 +1,8 @@
 #include "../includes/cub3d.h"
 
-int	check_map(t_map *map)
+int	check_map(t_map *map, t_player *p)
 {
-	if (create_map(map))
+	if (create_map(map, p))
 		return (ERROR);
 	if (validate_map(map))
 		return (ERROR);
@@ -23,7 +23,7 @@ int variable_map(t_map *m, char **lines)
 	return (0);
 }
 
-int	create_map(t_map *m)
+int	create_map(t_map *m, t_player *p)
 {
 	char	*line;
 	char	*aux;
@@ -41,6 +41,7 @@ int	create_map(t_map *m)
 	}
 	m->lines = ft_split(line, '\n');
 	variable_map(m, m->lines);
+	disc_player_pos(m->map, p);
 	free(line);
 	close(m->fd);
 	return (SUCCESS);

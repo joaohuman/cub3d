@@ -19,7 +19,6 @@ void 	dist_to_side(t_data *data);
 void	perform_dda(t_data *data, t_ray *ray);
 int     desenhar(t_data *d);
 void    calc_line_heigh(t_ray *ray, t_player *player);
-int     ft_line_len(char **map);
 int     rotate(double *x, double *y, double angle);
 int     key_no_pressed(int key, t_data *d);
 int     key_pressed_down(int key, t_data *d);
@@ -29,8 +28,8 @@ void    draw_image(t_data *data, int i);
 void    draw_minimapa(t_data *data);
 void    draw_square(t_mlx *mlx, int x, int y, int size, int color);
 
-int		check_map(t_map *map);
-int		create_map(t_map *map);
+int     check_map(t_map *map, t_player *p);
+int     create_map(t_map *m, t_player *p);
 int		validate_chars(t_map *map);
 int		validate_map(t_map *map);
 

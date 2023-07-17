@@ -48,31 +48,15 @@ void disc_player_pos(char **map, t_player *player)
 			if(map[y][x] == 'N' || map[y][x] == 'S' || \
 			map[y][x] == 'W' || map[y][x] == 'E')
 			{
+				set_player_direction(player, map[y][x]);
 				player->pos.x = x + 0.5;
 				player->pos.y = y + 0.5;
-				set_player_direction(player, map[y][x]);
 				return;
 			}
 			x++;
 		}
 		y++;
 	}
-}
-
-int ft_line_len(char **map)
-{
-	int i;
-	size_t len;
-
-	i = 0;
-	len = 0;
-	while(map[i])
-	{
-		if (ft_strlen(map[i]) > len)
-			len = ft_strlen(map[i]);
-		i++;
-	}
-	return ((int)len);
 }
 
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
