@@ -37,7 +37,7 @@ typedef struct s_player {
 	t_vector	dir;
 	t_vector	plane;
 	t_vector	move;
-	t_vector	rotate;
+	int			rotate;
 } t_player;
 
 typedef struct s_ray {

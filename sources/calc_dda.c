@@ -80,44 +80,60 @@ void calc_line_heigh(t_ray *ray, t_player *player)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-int	check_collision(t_map *m, double x, double y)
+int	check_collision(t_map *m, double p_x, double p_y, double d_x, double d_y)
 {
-	if (x < 0 || y < 0 || m->map[(int)y + 1][(int)x + 1] == '1')
-		return (true);
-	return (false);
+	int control;
+	double check_px;
+	double check_py;
+
+	check_px = p_x + (d_x * 0.005);
+	check_py = p_y + (d_y * 0.005);
+	control = 0;
+	if (check_px < 0 || check_px > WIDTH || check_py < 0 || \
+	check_py > HEIGHT || m->map[(int)check_py][(int)check_px] == '1')
+		control++;
+	return (control);
 }
 
 void move_player(t_player *p, t_map *m)
 {
 	(void)m;
-	// if (!check_collision(m, p->pos.x, p->pos.y))
-	// {
-		if (p->move.x == -1)
-		{
-			p->pos.x = p->pos.x - p->dir.y * 0.00002;
-			p->pos.y = p->pos.y + p->dir.x * 0.00002;
-		}
-		if (p->move.x == 1)
-		{
-			p->pos.x = p->pos.x + p->dir.y * 0.00002;
-			p->pos.y = p->pos.y - p->dir.x * 0.00002;
-		}
-		if (p->move.y == 1)
-		{
-			p->pos.x = p->pos.x + p->dir.x * 0.00002;
-			p->pos.y = p->pos.y + p->dir.y * 0.00002;
-		}
-		if (p->move.y == -1)
-		{
-			p->pos.x = p->pos.x - p->dir.x * 0.00002;
-			p->pos.y = p->pos.y - p->dir.y * 0.00002;
-		}
-	// }
+	if (p->move.x == -1 && !check_collision(m, p->pos.x, p->pos.y, p->dir.x, -p->dir.y))
+	{
+			p->pos.x = p->pos.x - p->dir.y * 0.00001;
+			p->pos.y = p->pos.y + p->dir.x * 0.00001;
+	}
+	if (p->move.x == 1 && !check_collision(m, p->pos.x, p->pos.y, -p->dir.x, p->dir.y))
+	{
+			p->pos.x = p->pos.x + p->dir.y * 0.00001;
+			p->pos.y = p->pos.y - p->dir.x * 0.00001;
+	}
+	if (p->move.y == 1 && !check_collision(m, p->pos.x, p->pos.y, p->dir.x, p->dir.y))
+	{
+			p->pos.x = p->pos.x + p->dir.x * 0.00001;
+			p->pos.y = p->pos.y + p->dir.y * 0.00001; 
+	}
+	if (p->move.y == -1 && !check_collision(m, p->pos.x, p->pos.y, -p->dir.x, -p->dir.y))
+	{
+			p->pos.x = p->pos.x - p->dir.x * 0.00001;
+			p->pos.y = p->pos.y - p->dir.y * 0.00001;
+	}
+	m->x = (int)p->pos.x;
+	m->y = (int)p->pos.y;
 }
 
-void rotate_player()
+void rotate_player(t_data *d)
 {
-
+	if (d->player.rotate == 1)
+	{
+		rotate(&d->player.dir.x, &d->player.dir.y, ROT_SPEED);
+		rotate(&d->player.plane.x, &d->player.plane.y, ROT_SPEED);
+	}
+	if (d->player.rotate == 2)
+	{
+		rotate(&d->player.dir.x, &d->player.dir.y, -ROT_SPEED);
+        rotate(&d->player.plane.x, &d->player.plane.y, -ROT_SPEED);
+	}
 }
 
 int draw(t_data *data)
@@ -128,6 +144,11 @@ int draw(t_data *data)
 	while (i < WIDTH)
 	{
 		move_player(&data->player, data->map);
+		// printf("p->pos.x = %f\n", data->player.pos.x);
+		// printf("p->pos.y = %f\n", data->player.pos.y);
+		// printf("map.x = %d\n", data->map->x);
+		// printf("map.y = %d\n", data->map->y);
+		rotate_player(data);
 		data->ray.multiplier = discover_multiplier(i);
 		create_dda(data);
 		dist_to_side(data);
