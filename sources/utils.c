@@ -38,7 +38,7 @@ void disc_player_pos(char **map, t_player *player)
 	int x;
 	int y;
 
-	y = START_OF_MAP;
+	y = 0;
 	x = 0;
 	while (map[y])
 	{
@@ -72,7 +72,7 @@ int ft_line_len(char **map)
 			len = ft_strlen(map[i]);
 		i++;
 	}
-	return ((int)len + 1);
+	return ((int)len);
 }
 
 void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)

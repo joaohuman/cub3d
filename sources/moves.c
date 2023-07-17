@@ -1,7 +1,5 @@
 #include "../includes/cub3d.h"
 
-//rotate(&d->player.plane_x, &d->player.plane_y, -ROTSPEED);
-
 int	rotate(double *x, double *y, double angle)
 {
 	double	old_x;
@@ -16,35 +14,35 @@ int key_pressed_down(int key, t_data *d)
 {
     if (key == XK_w)
     {
-        if (d->map->lines[(int)d->player.pos.y + 1][(int)d->player.pos.x] != '1')
+        if (d->map->map[(int)d->player.pos.y + 1][(int)d->player.pos.x] != '1')
             d->player.move.y = 1;
     }
-    else if (key == XK_s)
+    if (key == XK_s)
     {
-        if (d->map->lines[(int)d->player.pos.y - 1][(int)d->player.pos.x] != '1')
+        if (d->map->map[(int)d->player.pos.y - 1][(int)d->player.pos.x] != '1')
             d->player.move.y = -1;
     }
-    else if (key == XK_d)
+    if (key == XK_d)
     {
-        if (d->map->lines[(int)d->player.pos.y][(int)d->player.pos.x - 1] != '1')
+        if (d->map->map[(int)d->player.pos.y][(int)d->player.pos.x + 1] != '1')
             d->player.move.x = -1;
     }
-    else if (key == XK_a)
+    if (key == XK_a)
     {
-        if (d->map->lines[(int)d->player.pos.y][(int)d->player.pos.x + 1] != '1')
+        if (d->map->map[(int)d->player.pos.y][(int)d->player.pos.x - 1] != '1')
             d->player.move.x = 1;
     }
-    else if (key == XK_Right)
+    if (key == XK_Right)
     {
         rotate(&d->player.dir.x, &d->player.dir.y, ROT_SPEED);
         rotate(&d->player.plane.x, &d->player.plane.y, ROT_SPEED);
     }
-    else if (key == XK_Left)
+    if (key == XK_Left)
     {
         rotate(&d->player.dir.x, &d->player.dir.y, -ROT_SPEED);
         rotate(&d->player.plane.x, &d->player.plane.y, -ROT_SPEED);
     }
-    else if (key == XK_Escape)
+    if (key == XK_Escape)
 		ft_close(d);
     return (0);
 }

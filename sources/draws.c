@@ -32,17 +32,17 @@ void draw_minimapa(t_data *data)
 	int x;
 	int y;
 
-	i = START_OF_MAP;
-	while (i < ft_strlen_matrix(data->map->lines + 6) + 6)
+	i = 0;
+	while (i < ft_strlen_matrix(data->map->map))
 	{
 		j = 0;
-		while (j < ft_line_len(data->map->lines + 6))
+		while (j < ft_line_len(data->map->map))
 		{
 			x = j * 4;
 			y = i * 4;
-			if (data->map->lines[i][j] == '1')
+			if (data->map->map[i][j] == '1')
 				draw_square(&data->mlx, x, y, 4, 0x00FF00);
-			else if (data->map->lines[i][j] != '\0')
+			else if (data->map->map[i][j] != '\0')
 				draw_square(&data->mlx, x, y, 4, 0x000000);
 			j++;
 		}

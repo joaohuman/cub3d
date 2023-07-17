@@ -52,10 +52,10 @@ void	perform_dda(t_data *data, t_ray *ray)
 			data->map->y += ray->step.y;
 			ray->hit_side = 1;
 		}
-		if (data->map->y < 0 || data->map->x < 0 || !data->map->lines[data->map->y] \
-			|| !data->map->lines[data->map->y][data->map->x])
+		if (data->map->y < 0 || data->map->x < 0 || !data->map->map[data->map->y] \
+			|| !data->map->map[data->map->y][data->map->x])
 			break ;
-		if(data->map->lines[data->map->y][data->map->x] == '1')
+		if(data->map->map[data->map->y][data->map->x] == '1')
 			break ;
 	}
 }
@@ -80,16 +80,54 @@ void calc_line_heigh(t_ray *ray, t_player *player)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
+int	check_collision(t_map *m, double x, double y)
+{
+	if (x < 0 || y < 0 || m->map[(int)y + 1][(int)x + 1] == '1')
+		return (true);
+	return (false);
+}
+
+void move_player(t_player *p, t_map *m)
+{
+	(void)m;
+	// if (!check_collision(m, p->pos.x, p->pos.y))
+	// {
+		if (p->move.x == -1)
+		{
+			p->pos.x = p->pos.x - p->dir.y * 0.00002;
+			p->pos.y = p->pos.y + p->dir.x * 0.00002;
+		}
+		if (p->move.x == 1)
+		{
+			p->pos.x = p->pos.x + p->dir.y * 0.00002;
+			p->pos.y = p->pos.y - p->dir.x * 0.00002;
+		}
+		if (p->move.y == 1)
+		{
+			p->pos.x = p->pos.x + p->dir.x * 0.00002;
+			p->pos.y = p->pos.y + p->dir.y * 0.00002;
+		}
+		if (p->move.y == -1)
+		{
+			p->pos.x = p->pos.x - p->dir.x * 0.00002;
+			p->pos.y = p->pos.y - p->dir.y * 0.00002;
+		}
+	// }
+}
+
+void rotate_player()
+{
+
+}
+
 int draw(t_data *data)
 {
 	int i;
-	double factor = 0.00002;
 
 	i = 0;
 	while (i < WIDTH)
 	{
-		data->player.pos.x += factor * (data->player.move.x * data->player.dir.y - data->player.move.y * data->player.dir.x);
-		data->player.pos.y += factor * (data->player.move.y * data->player.dir.y + data->player.move.x * data->player.dir.x);
+		move_player(&data->player, data->map);
 		data->ray.multiplier = discover_multiplier(i);
 		create_dda(data);
 		dist_to_side(data);

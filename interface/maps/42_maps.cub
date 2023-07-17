@@ -3,8 +3,8 @@ SO ./interface/textures/northSO.xpm
 WE ./interface/textures/northWE.xpm
 EA ./interface/textures/northEA.xpm
 
-F 200,200,200
-C 2,100,67
+F 183,183,164
+C 0,119,182
 
 1111111111111111111111111111111111111
 1000000000000000001000000000000000001
