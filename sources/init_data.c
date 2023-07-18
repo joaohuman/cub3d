@@ -9,35 +9,10 @@ void	init_mlx(t_mlx *mlx)
 	&mlx->line_lenght, &mlx->endian);
 }
 
-void	init_map(t_map *map)
-{
-	ft_bzero(map, sizeof(t_map));
-}
-
-void init_player(t_player *player)
-{
-	player->dir.x = 0;
-	player->dir.y = -1;
-	player->plane.x = 0.66;
-	player->plane.y = 0;
-}
-
-void init_ray(t_ray *ray)
-{
-	ray->multiplier = 0;
-	ray->cam_pix.x = 0;
-	ray->cam_pix.y = 0;
-	ray->dir.x = 0;
-	ray->dir.y = 0;
-}
-
 void	init_data(t_data *data)
 {
 	ft_bzero(data, sizeof(t_data));
 	data->map = malloc(sizeof(t_map));
+	ft_bzero(data->map, sizeof(t_map));
 	init_mlx(&data->mlx);
-	init_player(&data->player);
-	init_ray(&data->ray);
-
-	init_map(data->map);
 }

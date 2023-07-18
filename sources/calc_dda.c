@@ -82,17 +82,15 @@ void calc_line_heigh(t_ray *ray, t_player *player)
 
 int	check_collision(t_map *m, double p_x, double p_y, double d_x, double d_y)
 {
-	int control;
 	double check_px;
 	double check_py;
 
 	check_px = p_x + (d_x * 0.059);
 	check_py = p_y + (d_y * 0.059);
-	control = 0;
 	if (check_px < 0 || check_px > WIDTH || check_py < 0 || \
 	check_py > HEIGHT || m->map[(int)check_py][(int)check_px] == '1')
-		control++;
-	return (control);
+		return (true);
+	return (false);
 }
 
 void move_player(t_player *p, t_map *m)
