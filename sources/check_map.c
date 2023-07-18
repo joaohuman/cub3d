@@ -42,6 +42,8 @@ int	create_map(t_map *m, t_player *p)
 	m->lines = ft_split(line, '\n');
 	variable_map(m, m->lines);
 	disc_player_pos(m->map, p);
+	m->x = (int)p->pos.x;
+	m->y = (int)p->pos.y;
 	free(line);
 	close(m->fd);
 	return (SUCCESS);

@@ -93,9 +93,10 @@ int	check_collision(t_map *m, double p_x, double p_y, double d_x, double d_y)
 	return (false);
 }
 
+// void att_pos()
+
 void move_player(t_player *p, t_map *m)
 {
-	(void)m;
 	if (p->move.x == -1 && !check_collision(m, p->pos.x, p->pos.y, p->dir.x, -p->dir.y))
 	{
 			p->pos.x = p->pos.x - p->dir.y * 0.00001;
@@ -115,11 +116,11 @@ void move_player(t_player *p, t_map *m)
 	{
 			p->pos.x = p->pos.x - p->dir.x * 0.00001;
 			p->pos.y = p->pos.y - p->dir.y * 0.00001;
+		m->x = (int)p->pos.x;
+		m->y = (int)p->pos.y;
 	}
-	m->x = (int)p->pos.x;
-	m->y = (int)p->pos.y;
 }
-
+// int	rotate(double *x, double *y, double angle)
 void rotate_player(t_data *d)
 {
 	if (d->player.rotate == 1)
