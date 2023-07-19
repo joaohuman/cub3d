@@ -114,8 +114,8 @@ void move_player(t_player *p, t_map *m)
 	}
 	if (p->move.y == -1 && !check_collision(m, p->pos.x, p->pos.y, -p->dir.x, -p->dir.y))
 	{
-			p->pos.x = p->pos.x - p->dir.x * 0.00001;
-			p->pos.y = p->pos.y - p->dir.y * 0.00001;
+		p->pos.x = p->pos.x - p->dir.x * 0.00001;
+		p->pos.y = p->pos.y - p->dir.y * 0.00001;
 		m->x = (int)p->pos.x;
 		m->y = (int)p->pos.y;
 	}
