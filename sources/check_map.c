@@ -9,13 +9,28 @@ int	check_map(t_map *map, t_player *p)
 	return (SUCCESS);
 }
 
+void	*init_variable_map(size_t nmemb, size_t size)
+{
+	void	*p;
+
+	p = (void *) malloc(nmemb * size);
+	if (!p)
+		return (NULL);
+	ft_bzero(p, nmemb * size);
+	return (p);
+}
+
 int variable_map(t_map *m, char **lines)
 {
 	int i;
+	int len_matrix;
 
 	i = 0;
-	m->map = malloc(sizeof(char *) * ft_strlen_matrix(lines + 6) + 1);
-	while (i < ft_strlen_matrix(lines + 6))
+	len_matrix = ft_strlen_matrix(lines + 6);
+	m->map = init_variable_map(sizeof(char **), len_matrix + 1);
+	if (!m->map)
+		return (-1);
+	while (i < len_matrix)
 	{
 		m->map[i] = ft_strdup(lines[i + 6]);
 		i++;
