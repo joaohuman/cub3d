@@ -6,8 +6,8 @@ void create_dda(t_data *data)
 	data->ray.cam_pix.y = data->player.plane.y * data->ray.multiplier;
     data->ray.dir.x = data->player.dir.x + data->ray.cam_pix.x;
 	data->ray.dir.y = data->player.dir.y + data->ray.cam_pix.y;
-	data->map->x = (int)data->player.pos.x;
-	data->map->y = (int)data->player.pos.y;
+	data->ray.map.x = (int)data->player.pos.x;
+	data->ray.map.y = (int)data->player.pos.y;
 	data->ray.delta_dist.x = fabs(1 / data->ray.dir.x);
 	data->ray.delta_dist.y = fabs(1 / data->ray.dir.y);
 }
@@ -17,22 +17,22 @@ void dist_to_side(t_data *data)
 	if (data->ray.dir.x < 0)
 	{
 		data->ray.step.x = -1;
-		data->ray.dist_to_side.x = (data->player.pos.x - data->map->x) * data->ray.delta_dist.x;
+		data->ray.dist_to_side.x = (data->player.pos.x - data->ray.map.x) * data->ray.delta_dist.x;
 	}
 	else
 	{
 		data->ray.step.x = 1;
-		data->ray.dist_to_side.x = (data->map->x + 1.0 - data->player.pos.x) * data->ray.delta_dist.x;
+		data->ray.dist_to_side.x = (data->ray.map.x + 1.0 - data->player.pos.x) * data->ray.delta_dist.x;
 	}
 	if (data->ray.dir.y < 0)
 	{
 		data->ray.step.y = -1;
-		data->ray.dist_to_side.y = (data->player.pos.y - data->map->y) * data->ray.delta_dist.y;
+		data->ray.dist_to_side.y = (data->player.pos.y - data->ray.map.y) * data->ray.delta_dist.y;
 	}
 	else
 	{
 		data->ray.step.y = 1;
-		data->ray.dist_to_side.y = (data->map->y + 1.0 - data->player.pos.y) * data->ray.delta_dist.y;
+		data->ray.dist_to_side.y = (data->ray.map.y + 1.0 - data->player.pos.y) * data->ray.delta_dist.y;
 	}
 }
 
@@ -43,19 +43,19 @@ void	perform_dda(t_data *data, t_ray *ray)
 		if(ray->dist_to_side.x < ray->dist_to_side.y)
 		{
 			ray->dist_to_side.x += ray->delta_dist.x;
-			data->map->x += ray->step.x;
+			ray->map.x += ray->step.x;
 			ray->hit_side = 0;
 		}
 		else
 		{
 			ray->dist_to_side.y += ray->delta_dist.y;
-			data->map->y += ray->step.y;
+			ray->map.y += ray->step.y;
 			ray->hit_side = 1;
 		}
-		if (data->map->y < 0 || data->map->x < 0 || !data->map->map[data->map->y] \
-			|| !data->map->map[data->map->y][data->map->x])
+		if (ray->map.y < 0 || ray->map.x < 0 || !data->map->map[ray->map.y] \
+			|| !data->map->map[ray->map.y][ray->map.x])
 			break ;
-		if(data->map->map[data->map->y][data->map->x] == '1')
+		if(data->map->map[ray->map.y][ray->map.x] == '1')
 			break ;
 	}
 }
@@ -80,44 +80,11 @@ void calc_line_heigh(t_ray *ray, t_player *player)
 	ray->wall_x -= floor(ray->wall_x);
 }
 
-int	check_collision(t_map *m, double p_x, double p_y, double d_x, double d_y)
+int	check_collision(t_data *d, double x, double y)
 {
-	double check_px;
-	double check_py;
-
-	check_px = p_x + (d_x * 0.059);
-	check_py = p_y + (d_y * 0.059);
-	if (check_px < 0 || check_px > WIDTH || check_py < 0 || \
-	check_py > HEIGHT || m->map[(int)check_py][(int)check_px] == '1')
+	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT || d->map->map[(int)y][(int)x] == '1')
 		return (true);
 	return (false);
-}
-
-void move_player(t_player *p, t_map *m)
-{
-	(void)m;
-	if (p->move.x == -1 && !check_collision(m, p->pos.x, p->pos.y, p->dir.x, -p->dir.y))
-	{
-			p->pos.x = p->pos.x - p->dir.y * 0.00001;
-			p->pos.y = p->pos.y + p->dir.x * 0.00001;
-	}
-	if (p->move.x == 1 && !check_collision(m, p->pos.x, p->pos.y, -p->dir.x, p->dir.y))
-	{
-			p->pos.x = p->pos.x + p->dir.y * 0.00001;
-			p->pos.y = p->pos.y - p->dir.x * 0.00001;
-	}
-	if (p->move.y == 1 && !check_collision(m, p->pos.x, p->pos.y, p->dir.x, p->dir.y))
-	{
-			p->pos.x = p->pos.x + p->dir.x * 0.00001;
-			p->pos.y = p->pos.y + p->dir.y * 0.00001; 
-	}
-	if (p->move.y == -1 && !check_collision(m, p->pos.x, p->pos.y, -p->dir.x, -p->dir.y))
-	{
-			p->pos.x = p->pos.x - p->dir.x * 0.00001;
-			p->pos.y = p->pos.y - p->dir.y * 0.00001;
-	}
-	m->x = (int)p->pos.x;
-	m->y = (int)p->pos.y;
 }
 
 void rotate_player(t_data *d)
@@ -141,7 +108,6 @@ int draw(t_data *data)
 	i = 0;
 	while (i < WIDTH)
 	{
-		move_player(&data->player, data->map);
 		rotate_player(data);
 		data->ray.multiplier = discover_multiplier(i);
 		create_dda(data);

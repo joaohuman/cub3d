@@ -17,6 +17,10 @@ typedef struct s_vector{
 	double	y;
 } t_vector;
 
+typedef struct s_struct{
+	int 	x;
+	int 	y;
+} t_struct;
 typedef struct s_map {
 	char	**lines;
 	char	**map;
@@ -45,6 +49,7 @@ typedef struct s_ray {
 	t_vector dir;
 	t_vector cam_pix;
 	t_vector delta_dist;
+	t_struct map;
 	int hit_side;
 	t_vector dist_to_side;
 	t_vector step;

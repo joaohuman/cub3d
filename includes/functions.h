@@ -27,6 +27,7 @@ void    disc_player_pos(char **map, t_player *player);
 void    draw_image(t_data *data, int i);
 void    draw_minimapa(t_data *data);
 void    draw_square(t_mlx *mlx, int x, int y, int size, int color);
+int     check_collision(t_data *d, double x, double y);
 
 int     check_map(t_map *map, t_player *p);
 int     create_map(t_map *m, t_player *p);

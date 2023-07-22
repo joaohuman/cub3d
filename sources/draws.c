@@ -68,4 +68,3 @@ void draw_square(t_mlx *mlx, int x, int y, int size, int color)
 		i++;
 	}
 }
-
