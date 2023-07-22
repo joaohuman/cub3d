@@ -43,9 +43,17 @@ int	validate_single_player(t_map *map)
 int	check_around_char(int i, int j, t_map *map)
 {
 	char	**lines;
+	int 	h_much_lines;
 
-	lines = map->lines;
-	if (ft_strchr("0NSWE", lines[i][j]) && (
+	lines = map->map;
+	h_much_lines = ft_strlen_matrix(lines);
+	if (ft_strchr("0NSWE", lines[i][j]) && \
+		(j == 0 || j + 1 == (int)ft_strlen(lines[i])))
+		return (ERROR);
+	else if (ft_strchr("0NSWE", lines[i][j]) && \
+		(i == 0 || i == h_much_lines - 1))
+		return (ERROR);
+	else if (ft_strchr("0NSWE", lines[i][j]) && (
 		lines[i][j + 1] == '\0' || lines[i + 1][j + 1] == '\0' || \
 		lines[i][j - 1] == '\0' || lines[i + 1][j - 1] == '\0' || \
 		lines[i + 1][j] == '\0' || lines[i - 1][j + 1] == '\0' || \
@@ -65,12 +73,12 @@ int	validate_map_borders(t_map *map)
 	int	j;
 	int	k;
 
-	i = START_OF_MAP;
+	i = 0;
 	j = 0;
-	k = ft_strlen_matrix(&map->lines[i]);
+	k = ft_strlen_matrix(&map->map[i]);
 	while (k)
 	{
-		while (map->lines[i][j] != '\0')
+		while (map->map[i][j] != '\0')
 		{
 			if (check_around_char(i, j, map))
 				return (error_msg("The map is not surrounded by walls"));
