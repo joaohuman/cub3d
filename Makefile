@@ -1,4 +1,4 @@
-NAME				=	cub3d
+NAME				=	cub3D
 
 OBJ_DIR				=	./obj
 OBJS				=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
