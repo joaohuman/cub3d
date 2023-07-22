@@ -51,6 +51,8 @@ int		define_color(char c, t_map *map, int *rgb);
 
 void	free_all(t_data *data);
 void	free_matrix(char **matrix);
+int		free_check_map(t_data *data);
+
 
 int		ft_str_is_digit(char *str);
 int		ft_strlen_matrix(char **str);
