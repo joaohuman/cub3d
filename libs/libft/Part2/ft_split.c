@@ -6,101 +6,106 @@
 /*   By: jvictor- <jvictor-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:30:29 by lsantana          #+#    #+#             */
-/*   Updated: 2023/06/02 02:51:18 by jvictor-         ###   ########.fr       */
+/*   Updated: 2023/07/23 04:39:53 by jvictor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static char	**ft_free_all(char **mat, int i);
+static size_t	length_word(char const *s, char c)
+{
+	size_t	counter;
+	size_t	i;
 
-static int	ft_check_size(char const *s, char c)
-{                                           
+	counter = 0;
+	i = 0;
+	while (s[i] && s[i] == c)
+		i++;
+	while (s[i] && s[i] != c)
+	{
+		i++;
+		counter++;
+	}
+	return (counter);
+}
+
+static int	count_words(char const *s, char c)
+{
+	int	is_word;
+	int	how_many;
 	int	i;
-	int	count;
 
 	i = 0;
-	count = 0;
+	is_word = 0;
+	how_many = 0;
 	while (s[i])
 	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i])
+		if (is_word == 0 && s[i] != c)
 		{
-			while (s[i] != c && s[i])
-				i++;
-			count++;
+			is_word = 1;
+			how_many++;
 		}
+		else if (is_word && s[i] == c)
+			is_word = 0;
+		i++;
 	}
-	if (!s[i])
-		count++;
-	return (count);
+	return (how_many);
 }
 
-static char	*word_count(char *s, char c, int *size)
+static void	free_table(char **s)
 {
-	*size = 0;
-	if (!*s)
-		return (NULL);
-	while (*s == c)
-	{
-		s++;
-	}
-	if (!s[0])
-		return (NULL);
-	while (s[*size] != c && s[*size])
-	{
-		*size += 1;
-	}
-	return (s);
-}
-
-static char	**make_matrix(char *s, char c, char **mat)
-{
-	int	size_word;
-	int	posn_str;
 	int	i;
 
-	size_word = 0;
-	posn_str = 0;
-	s = word_count((char *)s, c, &size_word);
-	while (s)
+	i = 0;
+	while (s[i])
 	{
-		i = 0;
-		mat[posn_str] = (char *)ft_calloc(sizeof(char), (size_word + 1));
-		if (!mat[posn_str])
-			return (ft_free_all(mat, posn_str - 1));
-		while (size_word > 0)
-		{
-			mat[posn_str][i] = *s++;
-			i++;
-			size_word--;
-		}
-		posn_str++;
-		s = word_count(s, c, &size_word);
+		free(s[i]);
+		i++;
 	}
-	mat[posn_str] = 0;
-	return (mat);
+	free(s);
 }
 
-static char	**ft_free_all(char **mat, int i)
+static char	**allocates(char const *s, char c, char **table, char **table2)
 {
-	while (i >= 0)
+	int	i;
+
+	i = 0;
+	while (s[i])
 	{
-		free(mat[i]);
-		i--;
+		if (s[i] == c)
+		{
+			i++;
+			continue ;
+		}
+		if (s[i] != c)
+		{
+			*table = ft_substr(&s[i], 0, length_word(&s[i], c));
+			if (!table)
+			{
+				free_table(table);
+				return (NULL);
+			}
+			i += length_word(&s[i], c);
+			table++;
+		}
 	}
-	free(mat);
-	return (NULL);
+	*table = NULL;
+	return (table2);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**mat;
+	char	**table;
+	size_t	words;
 
-	mat = (char **)ft_calloc(sizeof(char *), ft_check_size(s, c));
-	if (!mat)
+	if (!s)
 		return (NULL);
-	mat = make_matrix((char *)s, c, mat);
-	return (mat);
+	words = count_words(s, c);
+	table = malloc((words + 1) * sizeof(char *));
+	if (!table)
+		return (NULL);
+	table = allocates(s, c, table, table);
+	if (!table)
+		return (NULL);
+	return (table);
 }

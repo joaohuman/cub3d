@@ -21,7 +21,7 @@ int variable_map(t_map *m, char **lines)
 		return (-1);
 	while (i < len_matrix)
 	{
-		m->map[i] = lines[i + 6];
+		m->map[i] = ft_strdup(lines[i + 6]);
 		i++;
 	}
 	return (0);
