@@ -101,6 +101,17 @@ void rotate_player(t_data *d)
 	}
 }
 
+void pixel_added(t_data *d)
+{
+	d->text.size = SPRITE_SIZE;
+	d->text.x = (int)(d->ray.wall_x * d->text.size);
+	if ((d->ray.hit_side == false && d->ray.dir.x < 0) || (d->ray.hit_side == true
+			&& d->ray.dir.y > 0))
+		d->text.x = d->text.size - d->text.x - 1;
+	d->text.step = 1.0 * d->text.size / d->ray.line_height;
+	d->text.pos = (d->ray.start_line - HEIGHT / 2 + d->ray.line_height / 2) * d->text.step;
+}
+
 int draw(t_data *data)
 {
 	int i;
@@ -114,6 +125,7 @@ int draw(t_data *data)
 		dist_to_side(data);
 		perform_dda(data, &data->ray);
 		calc_line_heigh(&data->ray, &data->player);
+		pixel_added(data);
 		draw_image(data, i);
 		i++;
 	}

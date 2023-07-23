@@ -16,5 +16,9 @@
 # define RIGHT_KEY 65361
 # define LEFT_KEY 65363
 # define PI 3.14159265358979323846
+# define NO 1
+# define SO 2
+# define WE 3
+# define EA 4
 
 #endif

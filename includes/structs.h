@@ -1,6 +1,14 @@
 #ifndef STRUCST_H
 # define STRUCST_H
 
+typedef struct s_text {
+	int				size;
+	double			step;
+	double			pos;
+	int				x;
+	int				y;
+} t_text;
+
 typedef struct s_img {
 	void	*img;
 	char	*addr;
@@ -79,6 +87,7 @@ typedef struct s_data {
 	t_map		*map;
 	t_player	player;
 	t_ray		ray;
+	t_text		text;
 } t_data;
 
 #endif

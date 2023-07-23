@@ -51,15 +51,15 @@ int get_direction(t_data *d)
 	if (d->ray.hit_side == 0)
 	{
 		if (d->ray.dir.x < 0)
-			return (4); //west
+			return (WE); //west
 		else
-			return (2); //east
+			return (EA); //east
 	}
 	else
 	{
 		if (d->ray.dir.y > 0)
-			return (1); //south
+			return (SO); //south
 		else
-			return (3); //north
+			return (NO); //north
 	}
 }

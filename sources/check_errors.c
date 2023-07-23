@@ -44,14 +44,20 @@ int	check_file(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 		return (-1);
+	close(fd);
 	return (0);
 }
 
 int	ft_close(t_data *s)
 {
 	mlx_destroy_image(s->mlx.mlx, s->mlx.img);
+	mlx_destroy_image(s->mlx.mlx, s->mlx.no->img);
+	mlx_destroy_image(s->mlx.mlx, s->mlx.so->img);
+	mlx_destroy_image(s->mlx.mlx, s->mlx.we->img);
+	mlx_destroy_image(s->mlx.mlx, s->mlx.ea->img);
 	mlx_destroy_window(s->mlx.mlx, s->mlx.win);
 	mlx_destroy_display(s->mlx.mlx);
 	free(s->mlx.mlx);
+	free_all(s);
 	exit (0);
 }

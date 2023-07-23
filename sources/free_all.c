@@ -10,7 +10,7 @@ int	free_check_map(t_data *data)
 
 void	free_all(t_data *data)
 {
-	free(data->map->lines);
+	free_matrix(data->map->lines);
 	free_matrix(data->map->map);
 	free(data->map);
 }

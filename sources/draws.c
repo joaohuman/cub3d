@@ -12,14 +12,16 @@ void draw_image(t_data *data, int i)
 	}
 	while (y < data->ray.end_line)
 	{
-		if (get_direction(data) == 1)
-			my_mlx_pixel_put(&data->mlx, i, y, 255); // azul
-		else if (get_direction(data) == 2)
-			my_mlx_pixel_put(&data->mlx, i, y, 0);
-		else if (get_direction(data) == 3)
-			my_mlx_pixel_put(&data->mlx, i, y, 111255); // ciano
-		else if (get_direction(data) == 4)
-			my_mlx_pixel_put(&data->mlx, i, y, 555555); // verde
+		data->text.y = (int)data->text.pos & (data->text.size - 1);
+		data->text.pos += data->text.step;
+		if (get_direction(data) == SO)
+			my_mlx_pixel_put(&data->mlx, i, y, ft_mlx_pixel_get(data->mlx.so, data->text.x, data->text.y)); // azul
+		else if (get_direction(data) == WE)
+			my_mlx_pixel_put(&data->mlx, i, y, ft_mlx_pixel_get(data->mlx.we, data->text.x, data->text.y));
+		else if (get_direction(data) == NO)
+			my_mlx_pixel_put(&data->mlx, i, y, ft_mlx_pixel_get(data->mlx.no, data->text.x, data->text.y)); // ciano
+		else if (get_direction(data) == EA)
+			my_mlx_pixel_put(&data->mlx, i, y, ft_mlx_pixel_get(data->mlx.ea, data->text.x, data->text.y)); // verde
 		y++;
 	}
 	while (y < HEIGHT)

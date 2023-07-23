@@ -70,7 +70,7 @@ void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	ft_mlx_pixel_get(t_mlx *mlx, int x, int y)
+int	ft_mlx_pixel_get(t_img *mlx, int x, int y)
 {
 	char	*byte;
 
