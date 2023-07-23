@@ -57,6 +57,10 @@ int	ft_close(t_data *s)
 	mlx_destroy_image(s->mlx.mlx, s->mlx.ea->img);
 	mlx_destroy_window(s->mlx.mlx, s->mlx.win);
 	mlx_destroy_display(s->mlx.mlx);
+	free(s->mlx.no);
+	free(s->mlx.so);
+	free(s->mlx.we);
+	free(s->mlx.ea);
 	free(s->mlx.mlx);
 	free_all(s);
 	exit (0);
