@@ -21,6 +21,7 @@ typedef struct s_struct{
 	int 	x;
 	int 	y;
 } t_struct;
+
 typedef struct s_map {
 	char	**lines;
 	char	**map;
