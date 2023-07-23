@@ -15,5 +15,6 @@
 # define W_KEY 'w'
 # define RIGHT_KEY 65361
 # define LEFT_KEY 65363
+# define PI 3.14159265358979323846
 
 #endif

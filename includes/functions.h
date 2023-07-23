@@ -28,6 +28,11 @@ void    draw_image(t_data *data, int i);
 void    draw_minimapa(t_data *data);
 void    draw_square(t_mlx *mlx, int x, int y, int size, int color);
 int     check_collision(t_data *d, double x, double y);
+void    ft_get_play_ang(char c, t_player *p);
+int     ft_mlx_pixel_get(t_mlx *mlx, int x, int y);
+int     get_direction(t_data *d);
+int     ft_set_texture(t_data *d);
+t_img   *ft_mlx_texture_get(void *mlx, char *file);
 
 int     check_map(t_map *map, t_player *p);
 int     create_map(t_map *m, t_player *p);

@@ -12,10 +12,14 @@ void draw_image(t_data *data, int i)
 	}
 	while (y < data->ray.end_line)
 	{
-		if (data->ray.hit_side == 0)
-			my_mlx_pixel_put(&data->mlx, i, y, 8388608);
-		else
-			my_mlx_pixel_put(&data->mlx, i, y, 16711680);
+		if (get_direction(data) == 1)
+			my_mlx_pixel_put(&data->mlx, i, y, 255); // azul
+		else if (get_direction(data) == 2)
+			my_mlx_pixel_put(&data->mlx, i, y, 0);
+		else if (get_direction(data) == 3)
+			my_mlx_pixel_put(&data->mlx, i, y, 111255); // ciano
+		else if (get_direction(data) == 4)
+			my_mlx_pixel_put(&data->mlx, i, y, 555555); // verde
 		y++;
 	}
 	while (y < HEIGHT)

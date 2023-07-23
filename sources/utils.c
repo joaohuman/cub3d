@@ -49,8 +49,10 @@ void disc_player_pos(char **map, t_player *player)
 			map[y][x] == 'W' || map[y][x] == 'E')
 			{
 				set_player_direction(player, map[y][x]);
+				ft_get_play_ang(map[y][x], player);
 				player->pos.x = x + 0.5;
 				player->pos.y = y + 0.5;
+				map[y][x] = '0';
 				return;
 			}
 			x++;
@@ -66,4 +68,13 @@ void	my_mlx_pixel_put(t_mlx *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_lenght + x * \
 	(data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
+}
+
+int	ft_mlx_pixel_get(t_mlx *mlx, int x, int y)
+{
+	char	*byte;
+
+	byte = mlx->addr + ((y * mlx->line_lenght)
+			+ (x * mlx->bits_per_pixel / 8));
+	return (*(unsigned int *)byte);
 }

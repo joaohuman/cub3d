@@ -1,6 +1,14 @@
 #ifndef STRUCST_H
 # define STRUCST_H
 
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_lenght;
+	int		endian;
+} t_img;
+
 typedef struct s_mlx {
 	void	*mlx;
 	void	*win;
@@ -9,6 +17,10 @@ typedef struct s_mlx {
 	int		bits_per_pixel;
 	int		line_lenght;
 	int		endian;
+	t_img	*no;
+	t_img	*so;
+	t_img	*we;
+	t_img	*ea;
 	int		set;
 }	t_mlx;
 
@@ -43,6 +55,7 @@ typedef struct s_player {
 	t_vector	plane;
 	t_vector	move;
 	int			rotate;
+	double		ang;
 } t_player;
 
 typedef struct s_ray {
