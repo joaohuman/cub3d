@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   defines.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/23 23:48:10 by lsantana          #+#    #+#             */
+/*   Updated: 2023/07/23 23:48:11 by lsantana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DEFINES_H
 # define DEFINES_H
 
@@ -9,10 +21,6 @@
 # define ERROR -1
 # define ESC 65307
 # define ROT_SPEED 0.000008
-# define A_KEY 'a'
-# define S_KEY 's'
-# define D_KEY 'd'
-# define W_KEY 'w'
 # define RIGHT_KEY 65361
 # define LEFT_KEY 65363
 # define PI 3.14159265358979323846

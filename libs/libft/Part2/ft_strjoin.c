@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvictor- <jvictor-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 22:01:48 by lsantana          #+#    #+#             */
-/*   Updated: 2023/05/26 03:08:40 by jvictor-         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:40:02 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 char	*ft_strjoin_free(char *s1, char *s2)
 {
-    char    *nstring;
-    size_t    i;
-    size_t    a;
+	char	*nstring;
+	size_t	i;
+	size_t	a;
 
-    nstring = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-    i = 0;
-    a = 0;
-    if (nstring == 0)
-        return (0);
-    while (s1[i] != '\0')
-    {
-        nstring[i] = s1[i];
-        i++;
-    }
-    while (s2[a] != '\0')
-    {
-        nstring[i + a] = s2[a];
-        a++;
-    }
-    nstring[i + a] = '\0';
-    free(s1);
-    s1 = NULL;
-    return (nstring);
+	nstring = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	i = 0;
+	a = 0;
+	if (nstring == 0)
+		return (0);
+	while (s1[i] != '\0')
+	{
+		nstring[i] = s1[i];
+		i++;
+	}
+	while (s2[a] != '\0')
+	{
+		nstring[i + a] = s2[a];
+		a++;
+	}
+	nstring[i + a] = '\0';
+	free(s1);
+	s1 = NULL;
+	return (nstring);
 }
 
 char	*ft_strjoin(char *s1, char *s2)

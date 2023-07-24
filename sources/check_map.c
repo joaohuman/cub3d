@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/23 23:48:40 by lsantana          #+#    #+#             */
+/*   Updated: 2023/07/23 23:48:41 by lsantana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	check_map(t_map *map, t_player *p)
@@ -9,10 +21,10 @@ int	check_map(t_map *map, t_player *p)
 	return (SUCCESS);
 }
 
-int variable_map(t_map *m, char **lines)
+int	variable_map(t_map *m, char **lines)
 {
-	int i;
-	int len_matrix;
+	int	i;
+	int	len_matrix;
 
 	i = 0;
 	len_matrix = ft_strlen_matrix(lines + 6);

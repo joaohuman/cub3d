@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map_support.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/23 23:48:36 by lsantana          #+#    #+#             */
+/*   Updated: 2023/07/23 23:48:37 by lsantana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	just_one_player(char *players_allowed, char c, int flag)
@@ -43,26 +55,24 @@ int	validate_single_player(t_map *map)
 int	check_around_char(int i, int j, t_map *map)
 {
 	char	**lines;
-	int 	h_much_lines;
+	int		h_much_lines;
 
 	lines = map->map;
 	h_much_lines = ft_strlen_matrix(lines);
-	if (ft_strchr("0NSWE", lines[i][j]) && \
-		(j == 0 || j + 1 == (int)ft_strlen(lines[i])))
+	if (ft_strchr("0NSWE", lines[i][j]) && (j == 0 || j
+			+ 1 == (int)ft_strlen(lines[i])))
 		return (ERROR);
-	else if (ft_strchr("0NSWE", lines[i][j]) && \
-		(i == 0 || i == h_much_lines - 1))
+	else if (ft_strchr("0NSWE", lines[i][j]) && (i == 0 || i == h_much_lines
+			- 1))
 		return (ERROR);
-	else if (ft_strchr("0NSWE", lines[i][j]) && (
-		lines[i][j + 1] == '\0' || lines[i + 1][j + 1] == '\0' || \
-		lines[i][j - 1] == '\0' || lines[i + 1][j - 1] == '\0' || \
-		lines[i + 1][j] == '\0' || lines[i - 1][j + 1] == '\0' || \
-		lines[i - 1][j] == '\0' || lines[i - 1][j - 1] == '\0' || \
-		lines[i][j + 1] == ' ' || lines[i + 1][j + 1] == ' ' || \
-		lines[i][j - 1] == ' ' || lines[i + 1][j - 1] == ' ' || \
-		lines[i + 1][j] == ' ' || lines[i - 1][j + 1] == ' ' || \
-		lines[i - 1][j] == ' ' || lines[i - 1][j - 1] == ' ' )
-		)
+	else if (ft_strchr("0NSWE", lines[i][j]) && (lines[i][j + 1] == '\0'
+			|| lines[i + 1][j + 1] == '\0' || lines[i][j - 1] == '\0' || lines[i
+			+ 1][j - 1] == '\0' || lines[i + 1][j] == '\0' || lines[i - 1][j
+			+ 1] == '\0' || lines[i - 1][j] == '\0' || lines[i - 1][j
+			- 1] == '\0' || lines[i][j + 1] == ' ' || lines[i + 1][j + 1] == ' '
+			|| lines[i][j - 1] == ' ' || lines[i + 1][j - 1] == ' ' || lines[i
+			+ 1][j] == ' ' || lines[i - 1][j + 1] == ' ' || lines[i
+			- 1][j] == ' ' || lines[i - 1][j - 1] == ' '))
 		return (ERROR);
 	return (SUCCESS);
 }

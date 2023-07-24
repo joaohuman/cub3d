@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_errors.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/23 23:48:31 by lsantana          #+#    #+#             */
+/*   Updated: 2023/07/23 23:48:32 by lsantana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	error_msg(char *msg)
@@ -63,5 +75,5 @@ int	ft_close(t_data *s)
 	free(s->mlx.ea);
 	free(s->mlx.mlx);
 	free_all(s);
-	exit (0);
+	exit(0);
 }
