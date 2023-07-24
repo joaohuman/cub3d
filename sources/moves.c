@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 23:49:07 by lsantana          #+#    #+#             */
-/*   Updated: 2023/07/23 23:49:08 by lsantana         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/cub3d.h"
 
 int	rotate(double *x, double *y, double angle)
@@ -42,7 +30,7 @@ int	move(t_data *d, double dx, double dy)
 	return (EXIT_SUCCESS);
 }
 
-int	key_pressed_down(int key, t_data *d)
+int key_pressed_down(int key, t_data *d)
 {
 	if (key == XK_w)
 		move(d, d->player.dir.x, d->player.dir.y);
@@ -52,18 +40,18 @@ int	key_pressed_down(int key, t_data *d)
 		move(d, -d->player.plane.x, -d->player.plane.y);
 	if (key == XK_d)
 		move(d, d->player.plane.x, d->player.plane.y);
-	if (key == XK_Right)
-		d->player.rotate = 1;
-	if (key == XK_Left)
-		d->player.rotate = 2;
-	if (key == XK_Escape)
+    if (key == XK_Right)
+        d->player.rotate = 1;
+    if (key == XK_Left)
+        d->player.rotate = 2;
+    if (key == XK_Escape)
 		ft_close(d);
-	return (0);
+    return (0);
 }
 
-int	key_no_pressed(int key, t_data *d)
+int key_no_pressed(int key, t_data *d)
 {
-	if (key == XK_Right || key == XK_Left)
-		d->player.rotate = 0;
-	return (0);
+    if (key == XK_Right || key == XK_Left)
+        d->player.rotate = 0;
+    return(0);
 }
