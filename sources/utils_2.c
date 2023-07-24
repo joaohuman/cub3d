@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 01:19:12 by lsantana          #+#    #+#             */
-/*   Updated: 2023/07/24 01:19:13 by lsantana         ###   ########.fr       */
+/*   Created: 2023/07/23 23:49:19 by lsantana          #+#    #+#             */
+/*   Updated: 2023/07/24 12:12:04 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	check_collision(t_data *d, double x, double y)
 {
-	if (x < 0 || x > WIDTH || y < 0 || y > HEIGHT
-		|| d->map->map[(int)y][(int)x] == '1')
+	if (x < 0 || x > ft_strlen(d->map->map[(int)y]) || y < 0 || \
+	y > ft_strlen_matrix(d->map->map) || d->map->map[(int)y][(int)x] == '1')
 		return (true);
 	return (false);
 }

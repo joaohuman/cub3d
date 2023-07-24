@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 23:48:26 by lsantana          #+#    #+#             */
-/*   Updated: 2023/07/24 01:42:21 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:10:24 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	draw(t_data *data)
 	i = 0;
 	while (i < WIDTH)
 	{
-		rotate_player(data);
 		data->ray.multiplier = discover_multiplier(i);
 		create_dda(data);
 		dist_to_side(data);
@@ -111,6 +110,7 @@ int	draw(t_data *data)
 		calc_line_heigh(&data->ray, &data->player);
 		pixel_added(data);
 		draw_image(data, i);
+		rotate_player(data);
 		i++;
 	}
 	draw_minimapa(data);
