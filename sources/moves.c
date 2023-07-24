@@ -6,7 +6,7 @@
 /*   By: lsantana <lsantana@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 23:49:07 by lsantana          #+#    #+#             */
-/*   Updated: 2023/07/23 23:49:08 by lsantana         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:52:01 by lsantana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	move(t_data *d, double dx, double dy)
 
 	new_pos_x = d->player.pos.x + dx * 0.05;
 	new_pos_y = d->player.pos.y + dy * 0.05;
-	if (check_collision(d, new_pos_x, new_pos_y))
+	if (check_collision(d, new_pos_x, new_pos_y + 0.05) || \
+	check_collision(d, new_pos_x, new_pos_y - 0.05) || \
+	check_collision(d, new_pos_x + 0.05, new_pos_y) || \
+	check_collision(d, new_pos_x - 0.05, new_pos_y))
 		return (EXIT_FAILURE);
 	if (dx != 0 && dy != 0)
 	{
